@@ -65,3 +65,6 @@ test-results/
 .cache/
 .eslintcache
 .biome/
+
+# Prisma
+service-rest/src/generated/
