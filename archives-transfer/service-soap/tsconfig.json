@@ -1,0 +1,19 @@
+{
+  "$schema": "https://www.schemastore.org/tsconfig",
+
+  "display": "Node SOAP Service",
+
+  "compilerOptions": {
+    "target": "es2022",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "lib": ["es2022"],
+    "outDir": "dist",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "typeRoots": ["./@types", "./node_modules/@types"]
+  },
+  
+  "include": ["src/**/*", "@types/**/*"]
+}
