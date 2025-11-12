@@ -9,10 +9,10 @@ datasource db {
 }
 
 model File {
-  id        Int       @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   name      String
   size      Int
   owner     String
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt   
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
