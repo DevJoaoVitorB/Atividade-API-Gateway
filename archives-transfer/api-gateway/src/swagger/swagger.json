@@ -1,0 +1,49 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API Gateway - File Manager",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/files": {
+      "get": {
+        "summary": "Lista arquivos (REST)",
+        "responses": {
+          "200": { "description": "Lista de arquivos" }
+        }
+      }
+    },
+    "/files/upload": {
+      "post": {
+        "summary": "Upload de arquivo",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": { "type": "string", "format": "binary" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Upload realizado" }
+        }
+      }
+    },
+    "/files/download/{id}": {
+      "get": {
+        "summary": "Baixar arquivo",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": { "description": "Arquivo retornado" }
+        }
+      }
+    }
+  }
+}
