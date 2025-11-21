@@ -11,7 +11,8 @@ export class FileGatewayController {
   // LIST (REST)
   async list(req: Request, res: Response, next: NextFunction) {
     try {
-      const metas = await rest.findAll();
+      const metasResponse = await rest.findAll();
+      const metas = metasResponse.data;
 
       const withLinks = metas.map((m: FileMeta & { _links: any }) => ({
         ...m,
@@ -19,7 +20,11 @@ export class FileGatewayController {
       }));
 
       return res.json(withLinks);
-    } catch (err) {
+    } catch (err: any) {
+      console.error("[API Gateway] Erro ao buscar arquivos no service-rest:", err.message);
+      if (err.response) {
+        console.error("Detalhes do erro:", err.response.data);
+      }
       next(err instanceof Error ? err : new Error(String(err)));
     }
   }
@@ -31,9 +36,15 @@ export class FileGatewayController {
         return res.status(400).json({ message: "Arquivo é obrigatório" });
 
       const { originalname, buffer, size } = req.file;
+      const { owner } = req.body as { owner?: string };
+
+      if (!owner || typeof owner !== "string") {
+        return res.status(400).json({ message: "Owner é obrigatório" });
+      }
 
       // 1 — cria o metadado no REST
-      const meta = await rest.create({ name: originalname, size });
+      const metaResponse = await rest.create({ name: originalname, size, owner });
+      const meta = metaResponse.data;
 
       // 2 — envia o arquivo para o SOAP
       const base64 = buffer.toString("base64");
@@ -53,8 +64,9 @@ export class FileGatewayController {
     try {
       const id = Number(req.params.id);
 
-      const meta = await rest.findById(id);
-      if (!meta) return res.status(404).json({ message: "Not found" });
+      const metaResponse = await rest.findById(id);
+      if (metaResponse.status === 404) return res.status(404).json({ message: "Not found" });
+      const meta = metaResponse.data;
 
       const soapFile = await soap.downloadFile(meta.name);
 

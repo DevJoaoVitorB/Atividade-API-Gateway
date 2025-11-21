@@ -12,14 +12,14 @@ export class FileRepository {
     }
 
     async findById(id: number): Promise<FileResponseDto | null> {
-        return await prisma.file.findFirst({ where: { id }});
+        return await prisma.file.findUnique({ where: { id: id }});
     }
 
     async delete(id: number): Promise<FileResponseDto | null> {
-        return await prisma.file.delete({ where: {id} });
+        return await prisma.file.delete({ where: { id: id } });
     } 
 
     async update(id: number, data: UpdateFileDto): Promise<FileResponseDto | null> {
-        return await prisma.file.update({ where: {id}, data});
+        return await prisma.file.update({ where: { id: id }, data});
     }
 }
