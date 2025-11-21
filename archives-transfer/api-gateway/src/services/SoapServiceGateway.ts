@@ -2,7 +2,9 @@ import { soap } from "strong-soap";
 
 export class SoapServiceGateway {
   private wsdl: string =
-    process.env.SOAP_SERVICE_URL || "http://localhost:8001/wsdl?wsdl";
+    process.env.SOAP_WSDL_URL ||
+    process.env.SOAP_SERVICE_URL ||
+    "http://localhost:8001/wsdl?wsdl";
 
   private call<T>(method: string, args: Record<string, unknown>): Promise<T> {
     return new Promise((resolve, reject) => {
