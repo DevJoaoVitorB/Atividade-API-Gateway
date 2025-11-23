@@ -2,53 +2,76 @@ import fs from "fs";
 import path from "path";
 
 const storagePath = path.resolve(__dirname, "../../storage");
+if (!fs.existsSync(storagePath)) fs.mkdirSync(storagePath, { recursive: true });
 
-if (!fs.existsSync(storagePath)) {
-  fs.mkdirSync(storagePath, { recursive: true });
+export interface UploadArgs {
+  fileName: string;
+  fileContent: string;
+}
+
+export interface DownloadArgs {
+  fileName: string;
+}
+
+export interface SoapCallback<T> {
+  (err: any, result: T): void;
 }
 
 export const fileService = {
-  UploadFile({ fileName, fileContent }: { fileName: string; fileContent: string }) {
+  UploadFile(args: UploadArgs, callback: SoapCallback<any>) {
     try {
-      const buffer = Buffer.from(fileContent, "base64");
-      const filePath = path.join(storagePath, fileName);
+      const buffer = Buffer.from(args.fileContent, "base64");
+      fs.writeFileSync(path.join(storagePath, args.fileName), buffer);
 
-      fs.writeFileSync(filePath, buffer);
-      console.log(`✅ Arquivo salvo: ${filePath}`);
-
-      return { status: "success", message: `File '${fileName}' uploaded successfully.` };
-    } catch (err) {
-      console.error("Erro no upload:", err);
-      return { status: "error", message: "Upload failed." };
+      callback(null, {
+        UploadFileResponse: {
+          status: "success",
+          message: `File '${args.fileName}' uploaded successfully.`
+        }
+      });
+    } catch {
+      callback(null, {
+        UploadFileResponse: {
+          status: "error",
+          message: "Upload failed."
+        }
+      });
     }
   },
 
-  DownloadFile({ fileName }: { fileName: string }) {
+  DownloadFile(args: DownloadArgs, callback: SoapCallback<any>) {
     try {
-      const filePath = path.join(storagePath, fileName);
+      const filePath = path.join(storagePath, args.fileName);
 
       if (!fs.existsSync(filePath)) {
-        return { status: "error", message: "File not found." };
+        return callback(null, { DownloadFileResponse: { fileContent: "" } });
       }
 
-      const fileBuffer = fs.readFileSync(filePath);
-      const base64Content = fileBuffer.toString("base64");
+      const fileBase64 = fs.readFileSync(filePath).toString("base64");
 
-      console.log(`📤 Download de '${fileName}' realizado.`);
-      return { status: "success", fileContent: base64Content };
-    } catch (err) {
-      console.error("Erro no download:", err);
-      return { status: "error", message: "Download failed." };
+      callback(null, {
+        DownloadFileResponse: {
+          fileContent: fileBase64
+        }
+      });
+
+    } catch {
+      callback(null, { DownloadFileResponse: { fileContent: "" } });
     }
   },
 
-  ListFiles() {
+  ListFiles(_: any, callback: SoapCallback<any>) {
     try {
       const files = fs.readdirSync(storagePath);
-      return { files };
-    } catch (err) {
-      console.error("Erro ao listar arquivos:", err);
-      return { files: [] };
+
+      callback(null, {
+        ListFilesResponse: { files }
+      });
+
+    } catch {
+      callback(null, {
+        ListFilesResponse: { files: [] }
+      });
     }
-  },
+  }
 };

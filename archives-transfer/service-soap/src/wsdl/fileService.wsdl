@@ -6,12 +6,11 @@
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
     targetNamespace="http://example.com/fileservice">
 
-  <!-- TIPOS USADOS -->
   <types>
     <xsd:schema targetNamespace="http://example.com/fileservice">
-      
+
       <!-- UploadFile -->
-      <xsd:element name="UploadFileRequest">
+      <xsd:element name="UploadFile">
         <xsd:complexType>
           <xsd:sequence>
             <xsd:element name="fileName" type="xsd:string" />
@@ -30,7 +29,7 @@
       </xsd:element>
 
       <!-- DownloadFile -->
-      <xsd:element name="DownloadFileRequest">
+      <xsd:element name="DownloadFile">
         <xsd:complexType>
           <xsd:sequence>
             <xsd:element name="fileName" type="xsd:string" />
@@ -47,7 +46,7 @@
       </xsd:element>
 
       <!-- ListFiles -->
-      <xsd:element name="ListFilesRequest" type="xsd:anyType" />
+      <xsd:element name="ListFiles" type="xsd:anyType" />
       <xsd:element name="ListFilesResponse">
         <xsd:complexType>
           <xsd:sequence>
@@ -59,83 +58,72 @@
     </xsd:schema>
   </types>
 
-  <!-- MENSAGENS SOAP -->
-  <message name="UploadFileRequest">
-    <part name="parameters" element="tns:UploadFileRequest" />
+  <!-- SOAP Messages -->
+  <message name="UploadFile">
+    <part name="parameters" element="tns:UploadFile" />
   </message>
   <message name="UploadFileResponse">
     <part name="parameters" element="tns:UploadFileResponse" />
   </message>
 
-  <message name="DownloadFileRequest">
-    <part name="parameters" element="tns:DownloadFileRequest" />
+  <message name="DownloadFile">
+    <part name="parameters" element="tns:DownloadFile" />
   </message>
   <message name="DownloadFileResponse">
     <part name="parameters" element="tns:DownloadFileResponse" />
   </message>
 
-  <message name="ListFilesRequest">
-    <part name="parameters" element="tns:ListFilesRequest" />
+  <message name="ListFiles">
+    <part name="parameters" element="tns:ListFiles" />
   </message>
   <message name="ListFilesResponse">
     <part name="parameters" element="tns:ListFilesResponse" />
   </message>
 
-  <!-- PORT TYPE (API) -->
+  <!-- PORT TYPE -->
   <portType name="FileServicePortType">
     <operation name="UploadFile">
-      <input message="tns:UploadFileRequest" />
+      <input message="tns:UploadFile" />
       <output message="tns:UploadFileResponse" />
     </operation>
     <operation name="DownloadFile">
-      <input message="tns:DownloadFileRequest" />
+      <input message="tns:DownloadFile" />
       <output message="tns:DownloadFileResponse" />
     </operation>
     <operation name="ListFiles">
-      <input message="tns:ListFilesRequest" />
+      <input message="tns:ListFiles" />
       <output message="tns:ListFilesResponse" />
     </operation>
   </portType>
 
-  <!-- BINDING (SOAP) -->
+  <!-- BINDING -->
   <binding name="FileServiceBinding" type="tns:FileServicePortType">
-    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
 
     <operation name="UploadFile">
-      <soap:operation soapAction="uploadFile" />
-      <input>
-        <soap:body use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
+      <soap:operation soapAction="uploadFile"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
     </operation>
 
     <operation name="DownloadFile">
-      <soap:operation soapAction="downloadFile" />
-      <input>
-        <soap:body use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
+      <soap:operation soapAction="downloadFile"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
     </operation>
 
     <operation name="ListFiles">
-      <soap:operation soapAction="listFiles" />
-      <input>
-        <soap:body use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
+      <soap:operation soapAction="listFiles"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
     </operation>
   </binding>
 
-  <!-- SERVICE (ENDPOINT) -->
+  <!-- SERVICE -->
   <service name="FileService">
     <port name="FileServicePort" binding="tns:FileServiceBinding">
-      <soap:address location="http://localhost:8001/wsdl" />
+      <soap:address location="http://localhost:8001/fileService"/>
     </port>
   </service>
+
 </definitions>

@@ -22,8 +22,8 @@ const server = http.createServer((request, response) => {
     response.end("404: Not Found!");
 });
 
-soap.listen(server, "/wsdl", serviceDefinition, wsdlXML);
+soap.listen(server, "/fileService", serviceDefinition, wsdlXML);
 
 server.listen(8001, "0.0.0.0", () => {
-  console.log("🚀 SOAP Service rodando em http://localhost:8001/wsdl?wsdl");
+  console.log("🚀 SOAP Service rodando em http://localhost:8001/fileService?wsdl");
 });

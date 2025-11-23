@@ -23,7 +23,7 @@ const config: runtime.GetPrismaClientConfig = {
       "value": "prisma-client"
     },
     "output": {
-      "value": "/home/isaac/IFRN/4º Periodo/Sistemas Distribuidos/Atividade-API-Gateway/archives-transfer/service-rest/src/generated/prisma",
+      "value": "C:\\Users\\DevJoaoVitorB\\Documents\\Atividade-API-Gateway\\archives-transfer\\service-rest\\src\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -32,12 +32,12 @@ const config: runtime.GetPrismaClientConfig = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "debian-openssl-3.0.x",
+        "value": "windows",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/home/isaac/IFRN/4º Periodo/Sistemas Distribuidos/Atividade-API-Gateway/archives-transfer/service-rest/prisma/schema.prisma",
+    "sourceFilePath": "C:\\Users\\DevJoaoVitorB\\Documents\\Atividade-API-Gateway\\archives-transfer\\service-rest\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativePath": "../../../prisma",
