@@ -1,8 +1,8 @@
 import app from "./app.js"
 
-const PORT = process.env.PORT
+const PORT = Number(process.env.PORT) ?? 8000
 
-app.listen(PORT, () => {
-    console.log(`🔥 Server rodando na porta ${PORT}: http://localhost:${PORT}`)
-    console.log(`📕 Documentação em http://localhost:${PORT}/docs`);
+app.listen(PORT, "0.0.0.0", () => {
+    console.log(`🔥 Server rodando na porta ${PORT}: http://0.0.0.0:${PORT}`)
+    console.log(`📕 Documentação em http://0.0.0.0:${PORT}/docs`);
 });

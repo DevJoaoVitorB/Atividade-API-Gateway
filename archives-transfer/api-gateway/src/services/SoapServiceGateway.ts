@@ -63,6 +63,17 @@ export class SoapServiceGateway {
     }
 
     async uploadFile(fileName: string, base64: string) {
+        console.log("");
+        console.log("");
+        console.log("");
+        console.log("");
+        console.log("");
+        console.log("Nome:" + fileName);
+        console.log("base demais: " + base64);
+        console.log("");
+        console.log("");
+        console.log("");
+        console.log("");
         const response = await this.call<{
             UploadFileResponse: { status: string; message: string };
         }>('UploadFile', {
