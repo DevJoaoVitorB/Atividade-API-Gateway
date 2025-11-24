@@ -106,3 +106,6 @@ archives-transfer/
 | **Banco**              | PostgreSQL                              | Armazenar metadados                       |
 | **Gerenciamento**      | pnpm                                    | Dependências centralizadas                |
 | **Controle de versão** | Git + GitHub                            | Versionamento e colaboração               |
+
+### Apresentação
+[canva](https://www.canva.com/design/DAG5ciIXF1Q/E36RH0XZKbDsbykoXPcCsg/edit)
